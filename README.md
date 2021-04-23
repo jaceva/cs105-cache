@@ -17,7 +17,7 @@ The lesson will walk through the implementation of a simple cache class in Pytho
 
 ## Lesson Code Description
 
-The goal of the lesson checkpoints is to have the learner implement a cache from scratch to complete an existing register/memory hierarchy. The initial program will consist of a bank of registers and blocks of main memory. A group of commands will exist that repeatedly request data from memory. The timing of the commands can be output to represent the performance of the commands. As the learner implements the cache they will see timing improve as well as the effects of different policy implementations.
+The goal of the lesson checkpoints is to have the learner implement a cache from scratch within an existing register/memory hierarchy. The initial program will consist of a bank of registers and blocks of main memory. A group of commands will exist that repeatedly request data from memory. The timing of the commands can be output to represent the performance of the commands. As the learner implements the cache they will see timing improve as well as the effects of different policy implementations.
 
 ## Things to consider
 - Combining ex3: Cache Implementation and ex4: Cache Hit might be good since the implementation of the cache class and cache hits may be one and the same.
@@ -62,16 +62,17 @@ The goal of the lesson checkpoints is to have the learner implement a cache from
 - NARRATIVE
   - Cache is made up of blocks
   - Cache entries hold data and memory location
-  - For a memory request the processor will check the cache first, this will either result in a cache hit or a cache miss. 
+  - For a memory request, the processor will check the cache first and will either result in a cache hit or a cache miss. 
 - CHECKPOINTS
   - Create a cache class/subclass with smaller memory but faster processing times
   - Link cache class data "blocks" to memory class data "blocks"
-### Cache Hit ( this could be combined with previous exercise: i.e. Cache Description with Cache hit )
+
+### Cache Hit ( this could be combined with previous exercise )
 - NARRATIVE
   - Cache entries are checked for needed data, if found that's a cache hit.
-  - 
 - CHECKPOINTS
   - Implement a cache hit and transfer data back to register class.
+
 ## Cache Miss
 - NARRATIVE
   - When the data isn't in the cache it is a cache miss.
@@ -79,6 +80,7 @@ The goal of the lesson checkpoints is to have the learner implement a cache from
   - Hint at replacement policy by saying for now the cache entries will be replaced using either FIFO or random.
 - CHECKPOINTS
   - Implement cache miss functionality in cache class
+
 ## Replacement policy
 - NARRATIVE
   - Cache is only effective when there is data we can use in it. This is helped with a replacement policy.
@@ -87,6 +89,7 @@ The goal of the lesson checkpoints is to have the learner implement a cache from
   - FIFO
 - CHECKPOINTS
   - Implement different replacement policies and compare performance.
+
 ### Cache Mapping
 - NARRATIVE
   - Deciding where in the cache to store memory locations can affect performance.
@@ -96,6 +99,7 @@ The goal of the lesson checkpoints is to have the learner implement a cache from
   - Set associative
 - CHECKPOINTS
   - Implement different associativity.
+
 ### Cache Write
 - NARRATIVE
   - Writes to memory are not common (Hennesy and Patterson, find the figure, not in my book)
@@ -103,6 +107,8 @@ The goal of the lesson checkpoints is to have the learner implement a cache from
   - Write-through
   - Write-back
 - CHECKPOINTS
+  - Implement write-policies in the cache class.
+
 ### Summary
 - NARRATIVE
   - Summarize each topic
