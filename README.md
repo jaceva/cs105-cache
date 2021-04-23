@@ -30,7 +30,7 @@ The goal of the lesson checkpoints is to have the learner implement a cache from
 
 - Intro
 - Memory Hierarchy
-- Cache Implementation
+- Cache Memory
 - Cache Hit
 - Cache Miss
 - Replacement Policy
@@ -58,14 +58,14 @@ The goal of the lesson checkpoints is to have the learner implement a cache from
 - CHECKPOINTS
   1. Explain base code and output, then run code 
 
-###	Cache Description
+###	Cache Memory
 - NARRATIVE
   - Cache is made up of blocks
   - Cache entries hold data and memory location
   - For a memory request, the processor will check the cache first and will either result in a cache hit or a cache miss. 
 - CHECKPOINTS
   - Create a cache class/subclass with smaller memory but faster processing times
-  - Link cache class data "blocks" to memory class data "blocks"
+  - Link cache class data blocks to memory class data blocks
 
 ### Cache Hit ( this could be combined with previous exercise )
 - NARRATIVE
@@ -84,7 +84,7 @@ The goal of the lesson checkpoints is to have the learner implement a cache from
 ## Replacement policy
 - NARRATIVE
   - Cache is only effective when there is data we can use in it. This is helped with a replacement policy.
-  - Random (or whatever was programed in the previous exercise)
+  - Random (or start with the policy implementing in the previous exercise)
   - LRU
   - FIFO
 - CHECKPOINTS
@@ -96,7 +96,7 @@ The goal of the lesson checkpoints is to have the learner implement a cache from
   - Fully associative
   - Direct-Mapped
   - Compare and contrast the 2 
-  - Set associative
+  - Set associative can be a happy medium. 
 - CHECKPOINTS
   - Implement different associativity.
 
@@ -107,7 +107,7 @@ The goal of the lesson checkpoints is to have the learner implement a cache from
   - Write-through
   - Write-back
 - CHECKPOINTS
-  - Implement write-policies in the cache class.
+  - Implement write policies.
 
 ### Summary
 - NARRATIVE
