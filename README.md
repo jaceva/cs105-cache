@@ -1,4 +1,33 @@
 # CS105 Cache Lesson Outline
+
+## Resources
+[Wikipedia: CPU Cache](https://en.wikipedia.org/wiki/CPU_cache)
+
+[Computer Architecture: A Quantitative Approach](https://www.elsevier.com/books/computer-architecture/hennessy/978-0-12-383872-8)
+
+[Essentials of Computer Organization and Hardware](https://www.oreilly.com/library/view/essentials-of-computer/9781284123043/)
+
+[Coursera: Computer Architecture - Motivation for Caches](https://www.coursera.org/learn/comparch/lecture/5girw/motivation-for-caches)
+
+## Lesson Description
+
+The goal of this lesson is to explain the motivation of cache and implement a small processor memory system that reveals the benefits of creating a deeper memory hierarchy. The lesson opens by introducing a real-world analogy to cache. The history of processor vs memory performance will help introduce the motivation for an advanced memory hierarchy. 
+
+The lesson will walk through the implementation of a simple cache class in Python. At the end of the lesson the learner will have a working memory hierarchy that is able to moves data from within the memory using replacement policies and associativity. 
+
+## Lesson Code Description
+
+The goal of the lesson checkpoints is to have the learner implement a cache from scratch to complete an existing register/memory hierarchy. The initial program will consist of a bank of registers and blocks of main memory. A group of commands will exist that repeatedly request data from memory. The timing of the commands can be output to represent the performance of the commands. As the learner implements the cache they will see timing improve as well as the effects of different policy implementations.
+
+## Things to consider
+- Combining ex3: Cache Implementation and ex4: Cache Hit might be good since the implementation of the cache class and cache hits may be one and the same.
+- It may also be necessary to expand ex6: Replacement Policy and/or ex7: Cache Mapping.
+- It is important to not have the limitations of the code guide the exercise content.
+- Keeping the program output simple yet informative will be a balancing act
+- I didn't include anything on the Principle of Locality. This could change especially in the replacement policy exercise.
+
+## Exercise Overview
+
 - Intro
 - Memory Hierarchy
 - Cache Implementation
@@ -9,19 +38,7 @@
 - Cache Write
 - Summary
 
-## Lesson Description
-
-The goal of this lesson is to explain the motivation of cache and implement a small processor memory system that reveals the benefits of creating a memory hierarchy. The lesson opens by introducing a real-world analogy to cache. The history of processor speed vs memory speed will help introduce the need to create a memory hierarchy. 
-
-The lesson will walk through the implementation of a simple memory class in Python. This class will be able to represent memory types like registers, all levels of cache and main memory. The class will define a data limit, processing time and possibly a way to display processing time during memory reads and writes.
-
-At the end of the lesson the learner will have a working memory hierarchy that is able to moves data from within the memory using replacement policies and mapping tables. 
-
-## Lesson Code Description
-
-The goal of the lesson is to have the learner implement a cache from scratch to complete an existing register/memory hierarchy. The initial program will consist of a bank of registers and a block of main memory. A group of commands will exist that repeatedly request data from memory. The timing of the commands will measure performance. As the learner implements the cache they will see timing improve as well as the effects of different policy implementations.
-
-## Exercises
+## Exercises In-Depth
 ### Intro
 - NARRATIVE
   - Introduce analogy
@@ -78,7 +95,7 @@ The goal of the lesson is to have the learner implement a cache from scratch to 
   - Compare and contrast the 2 
   - Set associative
 - CHECKPOINTS
-  - Implement different association mapping.
+  - Implement different associativity.
 ### Cache Write
 - NARRATIVE
   - Writes to memory are not common (Hennesy and Patterson, find the figure, not in my book)
