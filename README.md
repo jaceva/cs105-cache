@@ -102,7 +102,7 @@ The goal of the lesson checkpoints is to have the learner implement a cache from
 
 ### Cache Write
 - NARRATIVE
-  - Writes to memory are not common (Hennesy and Patterson, find the figure, not in my book)
+  - Writes to memory are not common (Hennessy and Patterson, find the figure, not in my book)
   - Still important to create a write policy
   - Write-through
   - Write-back
