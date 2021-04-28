@@ -73,7 +73,7 @@ The goal of the lesson checkpoints is to have the learner implement a cache from
 - CHECKPOINTS
   - Implement a cache hit and transfer data back to register class.
 
-## Cache Miss
+### Cache Miss
 - NARRATIVE
   - When the data isn't in the cache it is a cache miss.
   - A new entry is created and the data and memory address are collected
@@ -81,7 +81,7 @@ The goal of the lesson checkpoints is to have the learner implement a cache from
 - CHECKPOINTS
   - Implement cache miss functionality in cache class
 
-## Replacement policy
+### Replacement policy
 - NARRATIVE
   - Cache is only effective when there is data we can use in it. This is helped with a replacement policy.
   - Random (or start with the policy implementing in the previous exercise)
