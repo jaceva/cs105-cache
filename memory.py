@@ -1,4 +1,4 @@
-from time import sleep
+from time import time, sleep
 
 # abstract memory class
 
@@ -29,19 +29,19 @@ class Register(Memory):
   def __init__(self):
     self.size = 4
     self.data = {"r0": 104, "r1": 0}
-    Memory.__init__(self, "REGISTER", self.data, 0.25)
+    Memory.__init__(self, "REGISTER", self.data, 0.05)
 
 class MainMemory(Memory):
   def __init__(self):
     self.size = 16
     self.data = [
-      104, 101, 108, 108, 
-      111, 0, 0, 0, 
-      0, 0, 0, 0, 
+      72, 101, 108, 108, 
+      111, 32, 87, 111, 
+      114, 108, 100, 33, 
       0, 0, 0, 0
     ]
     # self.data = [0] * self.size
-    Memory.__init__(self, "MEMORY", self.data, 2)
+    Memory.__init__(self, "MEMORY", self.data, 1)
 
 # cache to be written by the learner
 
@@ -61,7 +61,14 @@ class ISA():
       "li": self.load_i,
       "j": self.jump,
     }
-    self.console = ""
+    self.output = ""
+
+  def read_code(self, file):
+    with open(file) as codefile:
+      code = codefile.readlines()
+      lines = [line.strip() for line in code if line.strip() != '']
+      for line in lines:
+        self.parse_line(line)
 
   def parse_line(self, line):
     tokens = line.split(' ')
@@ -82,6 +89,7 @@ class ISA():
 
   def store(self, arg1, arg2):
     print(f"Store Byte:")
+
     byte = self.registers.read(arg1)
     loc = self.registers.read(arg2)
     self.memory.write(byte, loc)
@@ -89,6 +97,7 @@ class ISA():
 
   def load_i(self, arg1, arg2):
     print(f"Load Immediate:")
+
     self.registers.write(int(arg2), arg1)
     print()
 
@@ -97,7 +106,7 @@ class ISA():
 
     if arg1 == "100":
       byte = self.registers.read('r0')
-      self.console += chr(byte)
+      self.output += chr(byte)
     else:
       print("Jump address not recognized.")
 
@@ -107,28 +116,34 @@ class ISA():
 
 if __name__ == "__main__":
   arch1 = ISA()
+  start = time()
+  arch1.read_code("code.txt")
+  print(f"CONSOLE OUTPUT: {arch1.output}")
 
-  arch1.parse_line("li r1 0")
-  arch1.parse_line("lb r0 r1")
-  arch1.parse_line("j 100")
+  end = time()
+  print(f"DURATION: {end - start:.2f} seconds")
+  
+  # load/output first 5 memory blocks
+  
+  # arch1.parse_line("li r1 0")
+  # arch1.parse_line("lb r0 r1")
+  # arch1.parse_line("j 100")
 
-  arch1.parse_line("li r1 1")
-  arch1.parse_line("lb r0 r1")
-  arch1.parse_line("j 100")
+  # arch1.parse_line("li r1 1")
+  # arch1.parse_line("lb r0 r1")
+  # arch1.parse_line("j 100")
 
-  arch1.parse_line("li r1 2")
-  arch1.parse_line("lb r0 r1")
-  arch1.parse_line("j 100")
+  # arch1.parse_line("li r1 2")
+  # arch1.parse_line("lb r0 r1")
+  # arch1.parse_line("j 100")
 
-  arch1.parse_line("li r1 3")
-  arch1.parse_line("lb r0 r1")
-  arch1.parse_line("j 100")
+  # arch1.parse_line("li r1 3")
+  # arch1.parse_line("lb r0 r1")
+  # arch1.parse_line("j 100")
 
-  arch1.parse_line("li r1 4")
-  arch1.parse_line("lb r0 r1")
-  arch1.parse_line("j 100")
-
-  print(f"CONSOLE OUTPUT: {arch1.console}")
+  # arch1.parse_line("li r1 4")
+  # arch1.parse_line("lb r0 r1")
+  # arch1.parse_line("j 100")
 
   # store 'hello' in memory
   # arch1.parse_line("li r0 104")
@@ -150,6 +165,3 @@ if __name__ == "__main__":
   # arch1.parse_line("li r0 111")
   # arch1.parse_line("li r1 4")
   # arch1.parse_line("sb r0 r1")
-
-  print(arch1.memory.data)
-  print(arch1.registers.data)
