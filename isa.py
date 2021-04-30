@@ -1,8 +1,9 @@
-from memory import MainMemory, Register
+from memory import MainMemory, Register, Cache
 
 class ISA():
   def __init__(self, memory=MainMemory()):
-    self.memory = memory
+    self.memory = Cache()
+    # self.memory = memory
     self.registers = Register()
     self.instructions = { 
       "lb": self.load_b, 

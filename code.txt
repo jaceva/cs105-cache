@@ -7,7 +7,7 @@ j 100
 li r1 2
 lb r0 r1
 j 100
-li r1 3
+li r1 2
 lb r0 r1
 j 100
 li r1 4
@@ -19,13 +19,13 @@ j 100
 li r1 6
 lb r0 r1
 j 100
-li r1 7
+li r1 4
 lb r0 r1
 j 100
 li r1 8
 lb r0 r1
 j 100
-li r1 9
+li r1 2
 lb r0 r1
 j 100
 li r1 10
