@@ -1,9 +1,8 @@
 from memory import MainMemory, Register, Cache
 
 class ISA():
-  def __init__(self, memory=MainMemory()):
-    # self.memory = Cache()
-    # self.memory = memory
+  def __init__(self):
+    self.upper_memory = MainMemory()
     self.registers = Register()
     self.instructions = { 
       "lb": self.load_b, 
@@ -13,8 +12,8 @@ class ISA():
     }
     self.output = ""
 
-  def set_memory(self, memory):
-    self.memory = memory
+  def set_upper_memory(self, memory):
+    self.upper_memory = memory
 
   def read_code(self, file):
     with open(file) as codefile:
@@ -26,6 +25,8 @@ class ISA():
   def parse_line(self, line):
     tokens = line.split(' ')
     inst = tokens[0]
+    if inst == "lb" or inst == "sb":
+      print(f"{line}", end="")
     arg1 = tokens[1]
     if len(tokens) > 2:
       arg2 = tokens[2]
@@ -34,33 +35,23 @@ class ISA():
       self.instructions[inst](arg1)
 
   def load_b(self, arg1, arg2):
-    print(f"Load Byte:")
-    loc = self.registers.read(arg2)
-    byte = self.memory.read(loc)
-    self.registers.write(byte, arg1)
+    loc = self.registers.read(arg2, output_info=True)
+    byte = self.upper_memory.read(loc, output_info=True)
+    self.registers.write(byte, arg1, output_info=True)
     print()
 
   def store(self, arg1, arg2):
-    print(f"Store Byte:")
-
-    byte = self.registers.read(arg1)
-    loc = self.registers.read(arg2)
-    self.memory.write(byte, loc)
+    byte = self.registers.read(arg1, output_info=True)
+    loc = self.registers.read(arg2, output_info=True)
+    self.upper_memory.write(byte, loc, output_info=True)
     print()
 
   def load_i(self, arg1, arg2):
-    print(f"Load Immediate:")
-
     self.registers.write(int(arg2), arg1)
-    print()
 
   def jump(self, arg1):
-    print(f"Jump Immediate:")
-
     if arg1 == "100":
       byte = self.registers.read('r0')
       self.output += chr(byte)
     else:
       print("Jump address not recognized.")
-
-    print()

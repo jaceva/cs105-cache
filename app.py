@@ -4,8 +4,8 @@ from memory import MainMemory, Cache
 
 if __name__ == "__main__":
   arch1 = ISA()
-  # arch1.set_memory(MainMemory())
-  arch1.set_memory(Cache())
+  # arch1.set_upper_memory(MainMemory())
+  arch1.set_upper_memory(Cache())
   start = time()
   arch1.read_code("code.txt")
   print(f"CONSOLE OUTPUT: {arch1.output}")
