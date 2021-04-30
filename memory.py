@@ -48,30 +48,26 @@ class MainMemory(Memory):
 class Cache(Memory):
   def __init__(self):
 
-    size = 8
-    data = [[]] * size
     self.memory = MainMemory()
+    self.data_index = []
+    self.size = 8
+    # data = [[]] * self.size
+    data = []
     Memory.__init__(self, "CACHE", data, 0.1)
 
   def read(self, loc):
-    empty_blocks = []
-    for i, block in enumerate(self.data):
-      if loc in block:
-        return super().read(i)[1]
-      elif block == []:
-        empty_blocks.append(i)
-
-    byte = self.memory.read(loc)
-    if len(empty_blocks) > 0:
-      self.data[empty_blocks[0]] = [loc, byte]
-    else:
-      self.data[0] = [loc, byte]
-      
-    return byte
+    if loc in self.data_index:
+      print(f"\t-- CACHE HIT --")
+      index = self.data_index.index(loc)
+      return super().read(index)
 
     
-
-      
-
-
-  
+    print(f"\t-- CACHE MISS --")
+    byte = self.memory.read(loc)
+    self.data_index.append(loc)
+    self.data.append(byte)
+    if len(self.data_index) > self.size:
+      self.data_index = self.data_index[1:]
+      self.data = self.data[1:]
+    
+    return byte
