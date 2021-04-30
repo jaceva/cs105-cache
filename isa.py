@@ -2,7 +2,7 @@ from memory import MainMemory, Register, Cache
 
 class ISA():
   def __init__(self, memory=MainMemory()):
-    self.memory = Cache()
+    # self.memory = Cache()
     # self.memory = memory
     self.registers = Register()
     self.instructions = { 
@@ -12,6 +12,9 @@ class ISA():
       "j": self.jump,
     }
     self.output = ""
+
+  def set_memory(self, memory):
+    self.memory = memory
 
   def read_code(self, file):
     with open(file) as codefile:
