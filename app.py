@@ -8,7 +8,7 @@ if __name__ == "__main__":
   arch1.set_upper_memory(Cache())
   start = time()
   arch1.read_code("code.txt")
-  print(f"CONSOLE OUTPUT: {arch1.output}")
+  print(f"OUTPUT STRING: {arch1.output}")
 
   end = time()
   print(f"DURATION: {end - start:.2f} seconds")

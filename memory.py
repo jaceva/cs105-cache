@@ -8,16 +8,17 @@ class Memory():
     self.data = data
     self.name = name
 
-  def read(self, loc, output_info=False):
-    if output_info:
-      print(f"->{self.name} read", end="")
+  def read(self, loc):
+    data = self.data[loc]
+    if self.name != "register":
+      print(f"->{self.name} read: {chr(data)}", end="")
     sleep(self.process_time)
 
-    return self.data[loc]
+    return data
 
 
-  def write(self, byte, loc, output_info=False):
-    if output_info:
+  def write(self, byte, loc):
+    if self.name != "register":
       print(f"->{self.name} write", end="")
     sleep(self.process_time)
 
@@ -35,12 +36,19 @@ class Register(Memory):
 class MainMemory(Memory):
   def __init__(self):
     size = 16
+
+    # This is Mississippi.
     data = [
-      72, 101, 108, 108, 
-      111, 32, 87, 111, 
-      114, 108, 100, 33, 
-      0, 0, 0, 0
-    ]
+      84, 104, 105, 115, 
+      32, 77, 112, 46]
+    
+    # Hello World!
+    # data = [
+    #   72, 101, 108, 108, 
+    #   111, 32, 87, 111, 
+    #   114, 108, 100, 33, 
+    #   0, 0, 0, 0
+    # ]
     # self.data = [0] * self.size
     Memory.__init__(self, "memory", data, 1)
 
@@ -53,23 +61,29 @@ class Cache(Memory):
     self.read_cache = super().read
     self.size = 8
 
-    self.data_index = []
+    self.upper_index = []
     # data = [[]] * self.size
     data = []
     Memory.__init__(self, "cache", data, 0.1)
 
-  def read(self, loc, output_info):
-    if loc in self.data_index:
+  def read(self, loc):
+    if loc in self.upper_index:
       print(f"->CACHE HIT", end="")
-      index = self.data_index.index(loc)
+      index = self.upper_index.index(loc)
       return self.read_cache(index)
 
     print(f"->CACHE MISS", end="")
     byte = self.upper_memory.read(loc)
-    self.data_index.append(loc)
+
+    # Replacement Policy: FIFO
+    self.upper_index.append(loc)
     self.data.append(byte)
-    if len(self.data_index) > self.size:
-      self.data_index = self.data_index[1:]
+    if len(self.upper_index) > self.size:
+      self.upper_index = self.upper_index[1:]
       self.data = self.data[1:]
+
+    # Replacement Policy: LRU
+
+    # Replacement Policy: Random
     
     return byte

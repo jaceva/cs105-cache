@@ -35,15 +35,15 @@ class ISA():
       self.instructions[inst](arg1)
 
   def load_b(self, arg1, arg2):
-    loc = self.registers.read(arg2, output_info=True)
-    byte = self.upper_memory.read(loc, output_info=True)
-    self.registers.write(byte, arg1, output_info=True)
+    loc = self.registers.read(arg2)
+    byte = self.upper_memory.read(loc)
+    self.registers.write(byte, arg1)
     print()
 
   def store(self, arg1, arg2):
-    byte = self.registers.read(arg1, output_info=True)
-    loc = self.registers.read(arg2, output_info=True)
-    self.upper_memory.write(byte, loc, output_info=True)
+    byte = self.registers.read(arg1)
+    loc = self.registers.read(arg2)
+    self.upper_memory.write(byte, loc)
     print()
 
   def load_i(self, arg1, arg2):
