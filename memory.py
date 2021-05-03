@@ -1,4 +1,5 @@
 from time import sleep
+from random import randint
 
 # abstract memory class
 
@@ -59,31 +60,59 @@ class Cache(Memory):
     # class, __init__ and below two lines are implemented for the learner 
     self.upper_memory = MainMemory()
     self.read_cache = super().read
-    self.size = 8
+    self.size = 4
 
     self.upper_index = []
     # data = [[]] * self.size
     data = []
     Memory.__init__(self, "cache", data, 0.1)
 
-  def read(self, loc):
+  def read(self, loc, policy="FIFO"):
+    def replace_fifo(byte):
+      self.upper_index.append(loc)
+      self.data.append(byte)
+      if len(self.upper_index) > self.size:
+        self.upper_index = self.upper_index[1:]
+        self.data = self.data[1:]
+
+    def replace_random(byte):
+      index = randint(0, self.size)
+      self.upper_index[index] = loc
+      self.data[index] = byte
+
+    def replace_lru(byte):
+      
+
+    # cache_full = len(self.upper_index) == self.size
+
     if loc in self.upper_index:
       print(f"->CACHE HIT", end="")
       index = self.upper_index.index(loc)
+      if policy == "LRU":
+        pass
+        #TODO Move data and loc to front of line
+        # make sure read adjusts to the data change
       return self.read_cache(index)
 
     print(f"->CACHE MISS", end="")
     byte = self.upper_memory.read(loc)
 
+    if len(self.upper_index) < self.size:
+      self.upper_index.append(loc)
+      self.data.append(byte)
     # Replacement Policy: FIFO
-    self.upper_index.append(loc)
-    self.data.append(byte)
-    if len(self.upper_index) > self.size:
-      self.upper_index = self.upper_index[1:]
-      self.data = self.data[1:]
+    #TODO send loc with byte???
+    elif policy == "FIFO":
+      replace_fifo(byte)
+    # Replacement Policy: Random
+    elif policy == "RANDOM":
+      replace_random(byte)
+    elif policy == "LRU":
+      replace_lru(byte)
+
 
     # Replacement Policy: LRU
 
-    # Replacement Policy: Random
+    
     
     return byte
