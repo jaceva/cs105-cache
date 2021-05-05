@@ -28,27 +28,19 @@ Move to the next exercise to get started with Caches
 - Let’s put something in between
 
 
-So what is a memory hierarchy and why is it important? Let's answer the second part of that question by looking at the graph below. There are two lines, one for CPU speed and one for memory speed. Over time processor speed has greatly outpaced that of memory. Where it stands now is that a computer's processor can process data many times faster than data can be retrieved from memory. This is known as the processor-memory gap and is the main motivation behind creating a memory hierarchy.
+So what is a memory hierarchy and why is it important? Let's answer the second part of that question by looking at the graph below. 
 
 ![Performance gap of processors and memory](pm_gap.png)
 
-( Do i want to continue referencing the gardening example here? )
+There are two lines, one for processor performance and one for memory performance. As time passes, processor performance increases at a much higher rate than that of memory. This results in a computer that can process data much faster than it can retrieve data from memory. This is known as the processor-memory performance gap and is the motivation behind creating a memory hierarchy.
 
-The idea behind a memory hierarchy is for a processor to be able to access data from the fastest possible source, starting with its internal registers. If the data it needs is not in the registers it should go to the next level of memory. For a time the next level was large memory such as DRAM. The increasing performance gap between the CPU and memory motivated another. Giving the CPU access to memory that is faster and smaller in size than DRAM is where cache memory comes in.
+The gardening example from the previous exercise had you working in your garden until you needed to stop to get fertilizer from the store. The garden and the few tools you have are equivalent to the processor and data in the registers. Retrieving the fertilizer from the store is the same as retrieving data from memory. It's a slow process, but everything you need is there and you can get to both by bus ;-).
 
-Data in a processor's registers is accessed very fast because the registers are 
+![Simple Memory Hierarchy](mem_hier.png)
 
+The image above represents a simple memory hierarchy. At the top is the processor (your garden) with the best performance but can only hold a small amount of data. At the bottom is memory (the garden store) with the decrease performance but increased size. This memory is the DRAM/SDRAM/DDR memory used widely in computers today. Throughout this lesson we will refer to it as main memory. 
 
-
-When a computer processor has all the data it needs it is able to work fast, moving data in and out of registers and relying on a pipeline to get close to one instruction processed per cycle. 
-
-When the processor needs data from memory, just like walking to the shed or going to the garden store, the process slows down a lot. Retrieving data from memory is a very slow process compared to speedy work of a processor. In fact, the speed improvements of processors has drastically outpaced the improvements of memory speed.
-
-![Performance gap of processors and memory](pm_gap.png)
-
-The above chart shows that the rate of performance improvement of processors is much greater than that of memory. This is mostly due to the size of the memory in each case. The memory in a processor is small and local so it should take very little time to access. Computer memory like DRAM continues to grow in size and has always lived far away from the processor. The time for the data to be found and sent back to the processor can only improve so much as memory gets bigger.
-
-The next several exercises are going to introduce Cache memory. This memory unit placed in between the processor and the standard memory to store 
+The middle section of the memory hierarchy is cache. This is the type of memory that will help bridge the processor memory performance gap. In the garden example the cache is represented by our storage shed where the extra fertilizer you brought home is stored. 
 
 ### Checkpoints
 **CP1**
