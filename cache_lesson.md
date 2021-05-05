@@ -40,7 +40,7 @@ The gardening example from the previous exercise had you working in your garden 
 
 The image above represents a simple memory hierarchy. At the top is the processor (your garden) with the best performance but can only hold a small amount of data. At the bottom is memory (the garden store) with the decrease performance but increased size. This memory is the DRAM/SDRAM/DDR memory used widely in computers today. Throughout this lesson we will refer to it as main memory. 
 
-The middle section of the memory hierarchy is cache. This is the type of memory that will help bridge the processor memory performance gap. In the garden example the cache is represented by our storage shed where the extra fertilizer you brought home is stored. 
+The middle section of the memory hierarchy is cache and is equivalent to your storage shed where the extra fertilizer you brought home is stored. Cache memory is what we will cover for the rest of this lesson by showing how it helps bridge the processor memory performance gap.
 
 ### Checkpoints
 **CP1**
@@ -68,11 +68,12 @@ Throughout this lesson you will be working with a small memory hierarchy that ou
 - Cache entries hold data and memory location
 - For a memory request, the processor will check the cache first and will either result in a cache hit or a cache miss.
 
-Cache is small fast memory located close to the CPU. It is used to hold copies of data from main memery it thinks it may use soon. Instead of taking the time to retrieve the data from main memory, it can retrieve it from the faster cache memory.
+Cache memory can hold more data than the processor but less than main memory. It's increased size means data retrieval is slower than within the processor but is faster than from main memory. Cache memory can been seen as a compromise between the processor and main memory, yet this isn't what helps bridge the performance gap. The structure and the behavior of cache is what leads to increased data retrieval.
 
-Cache is made up of _blocks_ that are fixed in size. 
+Cache is made up of _blocks_ that are fixed in size. Each block is used to store a copy of data from main memory. For example, a cache that has a total storage capacity of 32kB where each block hold 64 bytes will have a total of 32,768/64 blocks, or 512 block.
 
-In order for cache memory help bridge the processor/memory performance gap, certain rules need to exist that ensures useful data is stored with in the memory blocks.
+Unlike memory, cache blocks are not assigned unique addresses. When a piece of data is stored in cache, it is paired with the address of the data in main memory. The address stored in a cache block is dependent on the data and where it came from in memory. This simplifies retrieval since the processor uses the same address when accessing data from cache or main memory.
+
 ### Checkpoints
 **CP1**
 - Introduce Cache class (already implemented with `MainMemory` as next tier and `size` set)
@@ -103,6 +104,8 @@ Run the code. Out put will be the same since `Cache()` is just a pass through fo
 - A new entry is created and the data and memory address are collected
 - Hint at replacement policy by saying for now the cache entries will be replaced using either FIFO or random.
 
+With cache in the memory hierarchy, each data request by the processor will first go to the cache. 
+
 ### Checkpoints
 **CP1**
 
@@ -126,6 +129,8 @@ Run the code. Out put will be the same since `Cache()` is just a pass through fo
 - A cache hit is what increases bridges the performance gap.
 - Cache entries are checked for needed data, if found that's a cache hit.
   
+When the processor goes to retrieve data from a specific address in main memory, it first looks for the address in cache. If found, it retrieves the data paired with the address.
+
 ### Checkpoints
 **CP1**
 
