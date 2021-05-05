@@ -13,7 +13,7 @@ It's a nice day out today and you have decided to work in your garden. You have 
 
 Getting the fertilizer from the store takes some time since you have to take the bus then find the fertilizer in the many aisles in the store. Once you find the fertilizer in the store you decide to buy extra to keep in your backyard shed. This way if you need fertilizer for your next project you'll have it and only have to get it from the shed. When you get back to your garden you use the fertilizer plant the flowers and enjoy a job well done.
 
-This is a lesson on CPU Cache memory so why are you gardening. The fertilizer, its location and what it means to spend time to retrieve and store it in the shed is a good example of a computer memory hierarchy. In the following exercises we will explore how minimize the delay in processing when access data from memory by introducing you to _Cache memory_. Just like the shed in our gardening example. Cache memory is a place we can keep data to access faster, so we don't have to wait for the main memory.
+This is a lesson on CPU Cache memory so why are you gardening. The fertilizer, its location and what it means to spend time to retrieve and store it in the shed is a good example of how a computer accesses memory. In the following exercises we will explore how minimize the delay in processing when access data from memory by introducing you to _Cache memory_. Just like the shed in our gardening example Cache memory is a place we can keep something we need to retrieve faster. By introducing cache in between the cpu and main memory, we are creating what is known as a _memory hierarchy_.
 
 ### Instructions
 **CP1**
@@ -27,13 +27,18 @@ Move to the next exercise to get started with Caches
 - Registers -> Fast but small – Memory -> big but slow
 - Let’s put something in between
 
-EDIT: Reference hierarchy of garden shed store.
 
-So what is a memory hierarchy? To answer this lets first look at why we need a memory hierarchy. The graph below shows the progression of the CPU-Memory performance gap or the rate of increase in CPU performance is much bigger than that of computer memory. What this means is that modern day processors are much faster than memory.
+So what is a memory hierarchy and why is it important? Let's answer the second part of that question by looking at the graph below. There are two lines, one for CPU speed and one for memory speed. Over time processor speed has greatly outpaced that of memory. Where it stands now is that a computer's processor can process data many times faster than data can be retrieved from memory. This is known as the processor-memory gap and is the main motivation behind creating a memory hierarchy.
 
 ![Performance gap of processors and memory](pm_gap.png)
 
-In the gardening example work was smooth when you were digging the holes because you had everything you needed. The work only slowed down when you needed to go to the shed or gardening store for supplies you don't have. 
+( Do i want to continue referencing the gardening example here? )
+
+The idea behind a memory hierarchy is for a processor to be able to access data from the fastest possible source, starting with its internal registers. If the data it needs is not in the registers it should go to the next level of memory. For a time the next level was large memory such as DRAM. The increasing performance gap between the CPU and memory motivated another. Giving the CPU access to memory that is faster and smaller in size than DRAM is where cache memory comes in.
+
+Data in a processor's registers is accessed very fast because the registers are 
+
+
 
 When a computer processor has all the data it needs it is able to work fast, moving data in and out of registers and relying on a pipeline to get close to one instruction processed per cycle. 
 
@@ -70,6 +75,12 @@ Throughout this lesson you will be working with a small memory hierarchy that ou
 - Cache is made up of blocks
 - Cache entries hold data and memory location
 - For a memory request, the processor will check the cache first and will either result in a cache hit or a cache miss.
+
+Cache is small fast memory located close to the CPU. It is used to hold copies of data from main memery it thinks it may use soon. Instead of taking the time to retrieve the data from main memory, it can retrieve it from the faster cache memory.
+
+Cache is made up of _blocks_ that are fixed in size. 
+
+In order for cache memory help bridge the processor/memory performance gap, certain rules need to exist that ensures useful data is stored with in the memory blocks.
 ### Checkpoints
 **CP1**
 - Introduce Cache class (already implemented with `MainMemory` as next tier and `size` set)
@@ -93,9 +104,12 @@ Run the code. Out put will be the same since `Cache()` is just a pass through fo
 
 **Hint**
 
-## Exercise
+## Exercise 4: Cache Miss
 
 ### Narrative
+- When the data isn't in the cache it is a cache miss.
+- A new entry is created and the data and memory address are collected
+- Hint at replacement policy by saying for now the cache entries will be replaced using either FIFO or random.
 
 ### Checkpoints
 **CP1**
@@ -114,10 +128,12 @@ Run the code. Out put will be the same since `Cache()` is just a pass through fo
 
 **Hint**
 
-## Exercise
+## Exercise 5: Cache Hit
 
 ### Narrative
-
+- A cache hit is what increases bridges the performance gap.
+- Cache entries are checked for needed data, if found that's a cache hit.
+  
 ### Checkpoints
 **CP1**
 
@@ -135,10 +151,14 @@ Run the code. Out put will be the same since `Cache()` is just a pass through fo
 
 **Hint**
 
-## Exercise
+## Exercise 6: Replacement Policy (Possibly Expand to 2 exercises)
 
 ### Narrative
-
+- Cache is only effective when there is data we can use in it. This is helped with a replacement policy.
+- Random (or start with the policy implementing in the previous exercise)
+- LRU
+- FIFO
+  
 ### Checkpoints
 **CP1**
 
@@ -156,10 +176,15 @@ Run the code. Out put will be the same since `Cache()` is just a pass through fo
 
 **Hint**
 
-## Exercise
+## Exercise 7: Cache Mapping
 
 ### Narrative
-
+- Deciding where in the cache to store memory locations can affect performance.
+- Fully associative
+- Direct-Mapped
+- Compare and contrast the 2 
+- Set associative can be a happy medium. 
+  
 ### Checkpoints
 **CP1**
 
@@ -177,10 +202,14 @@ Run the code. Out put will be the same since `Cache()` is just a pass through fo
 
 **Hint**
 
-## Exercise
+## Exercise 8: Cache Write
 
 ### Narrative
-
+- Writes to memory are not common (Hennessy and Patterson, find the figure, not in my book)
+- Still important to create a write policy
+- Write-through
+- Write-back
+  
 ### Checkpoints
 **CP1**
 
@@ -198,9 +227,10 @@ Run the code. Out put will be the same since `Cache()` is just a pass through fo
 
 **Hint**
 
-## Exercise
+## Exercise 9: Summary
 
 ### Narrative
+- Summarize each topic
 
 ### Checkpoints
 **CP1**
