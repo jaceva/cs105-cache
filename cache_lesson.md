@@ -68,11 +68,17 @@ Throughout this lesson you will be working with a small memory hierarchy that ou
 - Cache entries hold data and memory location
 - For a memory request, the processor will check the cache first and will either result in a cache hit or a cache miss.
 
-Cache memory can hold more data than the processor but less than main memory. It's increased size means data retrieval is slower than within the processor but is faster than from main memory. Cache memory can been seen as a compromise between the processor and main memory, yet this isn't what helps bridge the performance gap. The structure and the behavior of cache is what leads to increased data retrieval.
+Cache memory can hold more data than the processor but less than main memory. Its size means data retrieval is slower than within the processor but is faster than from main memory. Cache memory performance and size is a compromise between the processor and main memory. But this isn't what helps bridge the performance gap. The structure and the behavior of cache is what leads to increased data retrieval.
 
-Cache is made up of _blocks_ that are fixed in size. Each block is used to store a copy of data from main memory. For example, a cache that has a total storage capacity of 32kB where each block hold 64 bytes will have a total of 32,768/64 blocks, or 512 block.
+Cache is made up of _blocks_ equal in size. Each block stores a copy of data from main memory. Unlike memory, cache blocks are not assigned addresses. When a piece of data is stored in cache, it is paired with a _tag_ which is equal to the address of the data in main memory. This simplifies retrieval since the processor uses the same address when accessing data from cache and main memory.
 
-Unlike memory, cache blocks are not assigned unique addresses. When a piece of data is stored in cache, it is paired with the address of the data in main memory. The address stored in a cache block is dependent on the data and where it came from in memory. This simplifies retrieval since the processor uses the same address when accessing data from cache or main memory.
+![A cache with 2 blocks filled](cache.png)
+
+The diagram above represents a small cache with 4 blocks. The cache has two elements of data from main memory: the character `'Q'` with a tag `15` and the character `'c'` with a tag `2`. Remember the tag is the main memory address of the data. When the processor requests data from a main memory address it will first search for that address in the cache. If any of the blocks has a tag with the requested address a _cache hit_ occurs.
+
+![A cache hit](cache_hit_gif.png)
+
+In the animation there is a processor, main memory with a cache in the middle. The processor requests the data located at main memory address `2`. The address is found inside the cache so a cache hit occurs. The character `'c'` will be returned from cache and the main memory is never accessed. The goal of the memory hierarchy is to get as many cache hits when requesting data from memory.
 
 ### Checkpoints
 **CP1**
@@ -97,14 +103,12 @@ Run the code. Out put will be the same since `Cache()` is just a pass through fo
 
 **Hint**
 
-## Exercise 4: Cache Miss
+
+## Exercise 4: Cache Hit
 
 ### Narrative
-- When the data isn't in the cache it is a cache miss.
-- A new entry is created and the data and memory address are collected
-- Hint at replacement policy by saying for now the cache entries will be replaced using either FIFO or random.
-
-With cache in the memory hierarchy, each data request by the processor will first go to the cache. 
+- A cache hit is what increases bridges the performance gap.
+- Cache entries are checked for needed data, if found that's a cache hit.
 
 ### Checkpoints
 **CP1**
@@ -123,13 +127,25 @@ With cache in the memory hierarchy, each data request by the processor will firs
 
 **Hint**
 
-## Exercise 5: Cache Hit
+
+## Exercise 5: Cache Miss
 
 ### Narrative
-- A cache hit is what increases bridges the performance gap.
-- Cache entries are checked for needed data, if found that's a cache hit.
-  
-When the processor goes to retrieve data from a specific address in main memory, it first looks for the address in cache. If found, it retrieves the data paired with the address.
+- When the data isn't in the cache it is a cache miss.
+- A new entry is created and the data and memory address are collected
+- Hint at replacement policy by saying for now the cache entries will be replaced using either FIFO or random.
+
+When the processor requests data from a specific address in main memory, it first looks for the address in cache. If the address and associated data are not in the cache it is called a _cache miss_. 
+
+When a cache miss occurs the data request will continue to main memory and the memory address and retrieved data will get placed in cache. The below figure shows a cache miss in action. 
+
+
+To summarize:
+1. 
+
+
+
+
 
 ### Checkpoints
 **CP1**
