@@ -172,7 +172,7 @@ The correct replacement policy is key to increasing the number of cache hits a p
 
 **Hint**
 
-## Exercise 6: Cache Mapping
+## Exercise 6: Cache Associativity 
 
 ### Narrative
 - Deciding where in the cache to store memory locations can affect performance.
@@ -181,7 +181,20 @@ The correct replacement policy is key to increasing the number of cache hits a p
 - Compare and contrast the 2 
 - Set associative can be a happy medium. 
 
+Up until now, main memory data has been placed in any block in the cache. Is this the best way? What if each location in main memory has only 1 block in cache it can go? Associating memory locations to specified cache blocks is called cache associativity. 
 
+#### Fully Associative
+This has been the behavior of the cache through out this lesson. Each location in main memory can go to any block in the cache. This cache associativity requires a replacement policy that involves every entry in the cache.
+
+#### Direct Mapped
+When every location in main memory can only be placed in one specified block in cache, this is know as direct mapped cache. This associativity does not require a replacement policy since there is only one option for the data in main memory to be placed in cache.
+
+#### n-Way Set Associative
+This cache associativity breaks the cache into sets of _n_ blocks. Each location in main memory is mapped to a specified set of blocks. This requires a replacement policy but one that only keeps track of _n_ blocks in each set. The example cache with 2 blocks per set is called 2-way set associative and has a total of 2 sets that main memory locations can be mapped to. 
+
+Fully associative and direct mapped cache are each set associative caches. A fully associative cache with 32 blocks is considered to be 32-way set associative with one set. A direct mapped cache with 32 blocks is considered to be 1-way set associative with 32 sets. 
+
+The associativity and replacement policy of a cache work together with a memory hierarchy to minimize cache misses. Computer architecture designs can implement these two characteristics of a cache in a way to maximize performance based on other architecture design decisions. 
 
 ### Checkpoints
 **CP1**
