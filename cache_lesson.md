@@ -67,6 +67,8 @@ Throughout this lesson you will be working with a small memory hierarchy that ou
 - Cache is made up of blocks
 - Cache entries hold data and memory location
 - For a memory request, the processor will check the cache first and will either result in a cache hit or a cache miss.
+- A cache hit is what increases bridges the performance gap.
+- Cache entries are checked for needed data, if found that's a cache hit.
 
 Cache memory can hold more data than the processor but less than main memory. Its size means data retrieval is slower than within the processor but is faster than from main memory. Cache memory performance and size is a compromise between the processor and main memory. But this isn't what helps bridge the performance gap. The structure and the behavior of cache is what leads to increased data retrieval.
 
@@ -104,48 +106,20 @@ Run the code. Out put will be the same since `Cache()` is just a pass through fo
 **Hint**
 
 
-## Exercise 4: Cache Hit
-
-### Narrative
-- A cache hit is what increases bridges the performance gap.
-- Cache entries are checked for needed data, if found that's a cache hit.
-
-### Checkpoints
-**CP1**
-
-**Hint**
-
-**CP2**
-
-**Hint**
-
-**CP3**
-
-**Hint**
-
-**CP4**
-
-**Hint**
-
-
-## Exercise 5: Cache Miss
+## Exercise 4: Cache Miss
 
 ### Narrative
 - When the data isn't in the cache it is a cache miss.
 - A new entry is created and the data and memory address are collected
 - Hint at replacement policy by saying for now the cache entries will be replaced using either FIFO or random.
 
-When the processor requests data from a specific address in main memory, it first looks for the address in cache. If the address and associated data are not in the cache it is called a _cache miss_. 
+When the data requested from the processor isn't in cache, a _cache miss_ occurs. 
 
-When a cache miss occurs the data request will continue to main memory and the memory address and retrieved data will get placed in cache. The below figure shows a cache miss in action. 
+![A cache miss](cache_miss_gif.png)
 
+In the above animation of a cache miss, the data request first goes to the cache. A cache mis occurs and the request goes to main memory. The memory address and retrieved data will then be placed in cache. Finally, the processor will finish the request by retrieving the data from the cache.
 
-To summarize:
-1. 
-
-
-
-
+A cache miss is what populates data in the cache. But since cache has a quicker access time than main memory a cache hit is preferable to a cache miss. The goal of the cache is to keep the data that will result in the most cache hits and limit the cache misses.
 
 ### Checkpoints
 **CP1**
@@ -164,13 +138,22 @@ To summarize:
 
 **Hint**
 
-## Exercise 6: Replacement Policy (Possibly Expand to 2 exercises)
+## Exercise 5: Replacement Policy (Possibly Expand to 2 exercises)
 
 ### Narrative
 - Cache is only effective when there is data we can use in it. This is helped with a replacement policy.
 - Random (or start with the policy implementing in the previous exercise)
 - LRU
 - FIFO
+
+In the previous exercise, we looked at a half empty cache and added entries to that. But what happens when the cache is full and a cache miss occurs? The incoming data will need to replace an existing data entry in the cache, but which data entry?
+
+The decision about which populated entry will be replaced with new data is made by the cache's _replacement policy_. A replacement policy might use information about each cache entry in order decide which to replace. This approach comes at a cost of collecting and processing the information on each entry. Here are some examples of replacement policies:
+- First In First Out (FIFO): known also as round robin, this policy replaces the entries in the order that they came in to the cache. An index is maintained that points to the next entry to be replaced. After replacement, the index is incremented or set back to the first entry if the last entry was just replaced.
+- Least Recently Used (LRU): this policy replaces the with the most time passed since it was last accessed. This requires that each entry have a way to keep track of when it was last accessed compared to the other entries. 
+- Random Replacement: this policy chooses a cache entry at random. While there is some work involved in this policy the cost tends to be less than both the FIFO and LRU policies.
+
+The correct replacement policy is key to increasing the number of cache hits a processor has. The random replacement policy is simple to implement but might cause more cache hits than the other 2 policies. The LRU policy is more complicated but does a better job at keeping data in the cache that will be used again. In fact, the LRU policy has been expanded to multiple policies that look at an entries "age" as a way to decide which one to replace. 
   
 ### Checkpoints
 **CP1**
@@ -189,7 +172,7 @@ To summarize:
 
 **Hint**
 
-## Exercise 7: Cache Mapping
+## Exercise 6: Cache Mapping
 
 ### Narrative
 - Deciding where in the cache to store memory locations can affect performance.
@@ -197,7 +180,9 @@ To summarize:
 - Direct-Mapped
 - Compare and contrast the 2 
 - Set associative can be a happy medium. 
-  
+
+
+
 ### Checkpoints
 **CP1**
 
@@ -215,7 +200,7 @@ To summarize:
 
 **Hint**
 
-## Exercise 8: Cache Write
+## Exercise 7: Cache Write
 
 ### Narrative
 - Writes to memory are not common (Hennessy and Patterson, find the figure, not in my book)
@@ -240,7 +225,7 @@ To summarize:
 
 **Hint**
 
-## Exercise 9: Summary
+## Exercise 8: Summary
 
 ### Narrative
 - Summarize each topic
