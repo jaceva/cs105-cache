@@ -213,13 +213,24 @@ The associativity and replacement policy of a cache work together with a memory 
 
 **Hint**
 
-## Exercise 7: Cache Write
+## Exercise 7: Write Policy
+
 
 ### Narrative
 - Writes to memory are not common (Hennessy and Patterson, find the figure, not in my book)
 - Still important to create a write policy
 - Write-through
 - Write-back
+
+So far the exercises have covered reading from memory. What about writing to memory. While writing to memory does not happen as much as reading from memory, there are still specific cache behaviors when data is to down the memory hierarchy. 
+
+When the processor writes data to memory it is always written to cache. The memory address is searched in the tags of the cache entries. If the address is found the data is overwritten in the cache. If it is not found the replacement policy is used to decide which entry will be replaced with the new data. The decision of when to send data to main memory is made by the cache _write policy_.
+
+#### Write-through
+The write-through policy will write the data to main memory at the same time it is written to cache. This policy is easy to implement since there are no decisions that need to be made after the data is written to cache. The downside is that every write will require a slower memory access.
+
+#### Write-back
+The write back policy will only write the data to main memory when the entry in the associated entry in cache is overwritten. This policy is more complicated to implement because the data in cache now has to be monitored. For example, if data is written into cache and is no longer needed by the processor, the cache entry should not be written to main memory. This designation is known as a cache entry becoming dirty, which is something the cache needs to keep track of when the write-back policy is implemented. The benefit of the write-back policy is that every write does not access main memory. When an entry becomes dirty the data can now be overwritten without the memory ever being accessed.
   
 ### Checkpoints
 **CP1**
@@ -241,7 +252,14 @@ The associativity and replacement policy of a cache work together with a memory 
 ## Exercise 8: Summary
 
 ### Narrative
-- Summarize each topic
+- Memory hierarchy
+- The introduction of cache memory into the memory hierarchy is the solution to bridging the processor-memory performance gap.
+- Copies of data are stored in cache to give the processor quicker access to the data compared to main memory.
+- A cache hit is when requested data is located in the cache.
+- A cache miss is when requested data is not located in the cache and the data must be retrieved from main memory.
+- A cache replacement policy defines what entry in cache will be replaced by new data.
+- Cache associativity assigns main memory locations to specified cache entries.
+- A cache write policy defines how data is written back down the memory hierarchy.
 
 ### Checkpoints
 **CP1**
