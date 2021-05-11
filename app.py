@@ -1,14 +1,17 @@
 from isa import ISA
 from time import time
-from memory import MainMemory, Cache
+from memory import MainMemory
+from cache import Cache
 
 if __name__ == "__main__":
-  arch1 = ISA()
-  # arch1.set_upper_memory(MainMemory())
-  arch1.set_upper_memory(Cache())
-  start = time()
-  arch1.read_code("code.txt")
-  print(f"OUTPUT STRING: {arch1.output}")
+  cache_arch = ISA()
+  # cache_arch.set_memory(MainMemory())
+  cache_arch.set_memory(Cache())
 
-  end = time()
-  print(f"DURATION: {end - start:.2f} seconds")
+  ### Run code
+  duration = cache_arch.read_instructions("code_misp.txt")
+
+  ### Output memory data and code execution duration
+  if duration is not None:
+    print(f"OUTPUT STRING: {cache_arch.output}")
+    print(f"DURATION: {duration:.2f} seconds")

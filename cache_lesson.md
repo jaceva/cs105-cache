@@ -49,17 +49,34 @@ The middle section of the memory hierarchy is cache and is equivalent to your st
 - Explain the code to be used for the lesson.
 - Run the code, notice the memory can't be found.
 
-Throughout this lesson you will be working with a small memory hierarchy that outputs a string by bringing characters from memory. 
+Throughout this lesson you will work with a simulated memory hierarchy. Feel free to look around the files, but you will not need to know how everything works.
 
+The code consists of 3 files:
+- **isa.py:** implements a simple architecture including registers and a reference to the next level pf memory in the hierarchy. The module also defines few memory access commands and allow for the reading of instructions from a file.
+- **memory.py** defines the different memory types included in the architecture. To start there is a generic memory class `Memory()` which the `Register()` and `MainMemory()` classes inherit from. The distinctive features of each memory type are the data size and the access time.
+- **app.py** is the file you will use to configure the architecture and output important information regarding the memory access process.
+
+Currently **app.py** defines an instance of the `ISA()` class and assigns it to `cache_arch`. This will be the simulated architecture that will be used to run code to access the memory hierarchy. The `read_instructions` method is called and passed a text file with instructions, **code.txt**.
+
+To start with the simulation, run the code to see output that explains there is no memory found in the architecture.
 
 **Hint**
 
 **CP2**
 
-- 
 - Ask the learner to configure the architecture to use main memory.
 - (NO?)Call the architecture `read_code()` method with `"code.txt"` as the argument.
 - Run code, explain output.
+
+To attach memory to the architecture call the `set_memory()` method from `cache_arch` and pass it a call to `MainMemory()`.
+
+When you run the code you will see each memory access instruction output a description of what is happening. The program will finish by outputting a text string of all the data accessed from the memory along with the time the simulation took to run.
+
+**Hint**
+
+Call `cache_arch.set_memory()` with `MainMemory()`. Use the following syntax:
+
+`ISA_instance.method(MemorySubClass())`
 
 ## Exercise 3: Cache Memory
 

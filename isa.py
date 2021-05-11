@@ -1,8 +1,19 @@
-from memory import MainMemory, Register, Cache
+from memory import Memory
+from time import time
+
+class Register(Memory):
+  def __init__(self):
+    size = 2
+    data = {"r0": 104, "r1": 0}
+    Memory.__init__(self, "register", data, 0.05)
+
+  def read(self, loc):
+    data = self.data[loc]
+    return super().read(data, output=False)
 
 class ISA():
   def __init__(self):
-    self.upper_memory = MainMemory()
+    self.memory = None
     self.registers = Register()
     self.instructions = { 
       "lb": self.load_b, 
@@ -12,15 +23,22 @@ class ISA():
     }
     self.output = ""
 
-  def set_upper_memory(self, memory):
-    self.upper_memory = memory
+  def set_memory(self, memory):
+    self.memory = memory
 
-  def read_code(self, file):
-    with open(file) as codefile:
-      code = codefile.readlines()
-      lines = [line.strip() for line in code if line.strip() != '']
-      for line in lines:
-        self.parse_line(line)
+  def read_instructions(self, file):
+    if self.memory is not None:
+      print(f"ISA memory: {self.memory.name}")
+      start = time()
+      with open(file) as codefile:
+        code = codefile.readlines()
+        lines = [line.strip() for line in code if line.strip() != '']
+        for line in lines:
+          self.parse_line(line)
+      return time() - start
+    else:
+      print("Architecture has found no memory")
+      return None
 
   def parse_line(self, line):
     tokens = line.split(' ')
@@ -36,14 +54,14 @@ class ISA():
 
   def load_b(self, arg1, arg2):
     loc = self.registers.read(arg2)
-    byte = self.upper_memory.read(loc)
+    byte = self.memory.read(loc)
     self.registers.write(byte, arg1)
     print()
 
   def store(self, arg1, arg2):
     byte = self.registers.read(arg1)
     loc = self.registers.read(arg2)
-    self.upper_memory.write(byte, loc)
+    self.memory.write(byte, loc)
     print()
 
   def load_i(self, arg1, arg2):
@@ -52,6 +70,6 @@ class ISA():
   def jump(self, arg1):
     if arg1 == "100":
       byte = self.registers.read('r0')
-      self.output += chr(byte)
+      self.output += byte
     else:
       print("Jump address not recognized.")
