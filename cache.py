@@ -9,8 +9,9 @@ class Cache(Memory):
     self.read_cache = super().read
     self.size = 4
     self.data = []
+    self.index = -1
     for i in range(self.size):
-      self.data.append({'tag': None, 'data': ''})
+      self.data.append({'tag': None, 'data': '', 'age': None})
 
     # Mississippi
     # self.data = [
@@ -20,24 +21,61 @@ class Cache(Memory):
     #   {'tag': 3, 'data': 'p'},
     # ]
     
+    self.policy = self.replace_fifo
 
     latency = 0.1
     Memory.__init__(self, "Cache", self.data, latency)
 
+  def replace_random(self, addr, data):
+    return randint(0, self.size-1)
+    
+
+  def replace_fifo(self, addr, data):
+    self.index += 1
+    if self.index == self.size:
+      self.index = 0
+
+    return self.index
+
+  def replace_lru(self, addr, data):
+    for i, entry in enumerate(self.data):
+      if entry['tag'] == addr:
+        index = i
+      else:
+        entry['age'] += 1
+
+  def replace(self, addr, data):
+    index = self.policy(addr, data)
+    entry = self.data[index]
+    print(f"\nOld entry {index} - tag: {entry['tag']}, data: \"{entry['data']}, age: {entry['age']}\"")
+    entry = {'tag': addr, 'data': data}
+    self.data[index] = entry
+    print(f"New entry {index} - tag: {entry['tag']}, data: \"{entry['data']}, age: {entry['age']}\"")
+
   ## Given
   def is_hit(self, addr):
+    selected_entry = None
+
     for entry in self.data:
       if entry['tag'] == addr:
-        return entry
+        ## added for lru
+        entry['age'] = 0
+      ## added for lru
+      elif entry['age'] != self.size:
+        entry['age'] += 1
 
-    return None
+    return selected_entry
 
+  ## Given
   def add_entry(self, addr, data):
-    for entry in self.data:
+    for i, entry in enumerate(self.data):
       if entry['tag'] == None:
         entry['tag'] = addr
         entry['data'] = data
-        break
+        emtry['age'] = i
+        return
+
+    self.replace(addr, data)
 
   def read(self, addr):
     entry = self.is_hit(addr)

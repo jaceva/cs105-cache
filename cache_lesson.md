@@ -101,6 +101,7 @@ In the animation there is a processor, main memory with a cache in the middle. T
 
 ### Checkpoints
 **CP1**
+- Cache full with all data, output Mississippi
 - Introduce Cache class (already implemented with `MainMemory` as next tier and `size` set)
 - Learner will add the memory block variable(s)
 
@@ -139,6 +140,7 @@ In the above animation of a cache miss, the data request first goes to the cache
 A cache miss is what populates data in the cache. But since cache has a quicker access time than main memory a cache hit is preferable to a cache miss. The goal of the cache is to keep the data that will result in the most cache hits and limit the cache misses.
 
 ### Checkpoints
+- Cache empty, memory has all data, output Mississippi
 **CP1**
 
 **Hint**
@@ -173,6 +175,7 @@ The decision about which populated entry will be replaced with new data is made 
 The correct replacement policy is key to increasing the number of cache hits a processor has. The random replacement policy is simple to implement but might cause more cache hits than the other 2 policies. The LRU policy is more complicated but does a better job at keeping data in the cache that will be used again. In fact, the LRU policy has been expanded to multiple policies that look at an entries "age" as a way to decide which one to replace. 
   
 ### Checkpoints
+- Cache is empty or half full, output This is Mississippi. random already implemented?
 **CP1**
 
 **Hint**

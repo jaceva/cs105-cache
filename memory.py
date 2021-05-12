@@ -31,12 +31,12 @@ class MainMemory(Memory):
     latency = 1
 
     # This is Mississippi.
-    # data = [
-    #   'T', 'h', 'i', 's', 
-    #   ' ', 'M', 'p', '.']
+    self.data = [
+      'T', 'h', 'i', 's', 
+      ' ', 'M', 'p', '.']
 
     # Mississippi
-    self.data = ['M', 'i', 's', 'p',]
+    # self.data = ['M', 'i', 's', 'p',]
     
     Memory.__init__(self, "Main Memory", self.data, latency)
 

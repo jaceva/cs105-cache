@@ -9,7 +9,7 @@ if __name__ == "__main__":
   cache_arch.set_memory(Cache())
 
   ### Run code
-  duration = cache_arch.read_instructions("code_misp.txt")
+  duration = cache_arch.read_instructions("code.txt")
 
   ### Output memory data and code execution duration
   if duration is not None:
