@@ -3,7 +3,7 @@ from time import sleep
 # abstract memory class
 
 class Memory():
-  def __init__(self, name, access_time):
+  def __init__(self, name="", access_time=0):
     self.name = name
     self.access_time = access_time
 
@@ -22,7 +22,7 @@ class Memory():
 
 class MainMemory(Memory):
   def __init__(self):
-    self.size = 16
+    Memory.__init__(self, name="Main Memory", access_time=1)
     # Mississippi
     self.data = ['M', 'i', 's', 'p',]
 
@@ -33,7 +33,6 @@ class MainMemory(Memory):
 
     
     
-    Memory.__init__(self, "Main Memory", 1)
 
   def read(self, address):
     data = self.data[address]

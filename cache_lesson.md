@@ -45,9 +45,6 @@ The middle section of the memory hierarchy is cache and is equivalent to your st
 ### Checkpoints
 **CP1**
 
-- Explain the code to be used for the lesson.
-- Run the code, notice the memory can't be found.
-
 Throughout this lesson you will work with a simulated memory hierarchy. Feel free to look around the files, but you will not need to know how everything works.
 
 The code consists of 3 files:

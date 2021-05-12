@@ -3,9 +3,8 @@ from time import time
 
 class Register(Memory):
   def __init__(self):
-    self.size = 2
+    Memory.__init__(self, name="Register", access_time=0.05)
     self.data = {"r0": None, "r1": None}
-    Memory.__init__(self, "Register", 0.05)
 
   def read(self, loc):
     super().sim_read(output=False)

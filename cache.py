@@ -4,6 +4,7 @@ from random import randint
 
 class Cache(Memory):
   def __init__(self):
+    Memory.__init__(self, name="Cache", access_time=0.1)
     self.size = 4
     # Mississippi
     # self.data = [
@@ -26,7 +27,6 @@ class Cache(Memory):
     
     self.policy = self.replace_fifo
 
-    Memory.__init__(self, "Cache", 0.1)
 
   def replace_random(self):
     return randint(0, self.size-1)
