@@ -11,7 +11,7 @@ class Cache(Memory):
     self.data = []
     self.index = -1
     for i in range(self.size):
-      self.data.append({'tag': None, 'data': '', 'age': None})
+      self.data.append({'tag': None, 'data': ''})
 
     # Mississippi
     # self.data = [
@@ -37,34 +37,22 @@ class Cache(Memory):
 
     return self.index
 
-  def replace_lru(self, addr, data):
-    for i, entry in enumerate(self.data):
-      if entry['tag'] == addr:
-        index = i
-      else:
-        entry['age'] += 1
-
   def replace(self, addr, data):
     index = self.policy(addr, data)
     entry = self.data[index]
-    print(f"\nOld entry {index} - tag: {entry['tag']}, data: \"{entry['data']}, age: {entry['age']}\"")
+    print(f"\nOld entry {index} - tag: {entry['tag']}, data: \"{entry['data']}\"")
     entry = {'tag': addr, 'data': data}
     self.data[index] = entry
-    print(f"New entry {index} - tag: {entry['tag']}, data: \"{entry['data']}, age: {entry['age']}\"")
+    print(f"New entry {index} - tag: {entry['tag']}, data: \"{entry['data']}\"")
 
   ## Given
   def is_hit(self, addr):
-    selected_entry = None
-
+    
     for entry in self.data:
       if entry['tag'] == addr:
-        ## added for lru
-        entry['age'] = 0
-      ## added for lru
-      elif entry['age'] != self.size:
-        entry['age'] += 1
+        return entry
 
-    return selected_entry
+    return None
 
   ## Given
   def add_entry(self, addr, data):
@@ -72,7 +60,6 @@ class Cache(Memory):
       if entry['tag'] == None:
         entry['tag'] = addr
         entry['data'] = data
-        emtry['age'] = i
         return
 
     self.replace(addr, data)
