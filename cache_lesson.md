@@ -177,21 +177,47 @@ A cache miss is what populates data in the cache. But since cache has a quicker 
 - Cache empty, memory has all data, output Mississippi
 **CP1**
 
+To work on cache misses the `Cache()` class has added a variable, `self.main_memory`, which is assigned an instance of `Main_Memory()`. The `Cache()` class is now starting with empty `self.data`. These two changes will allow the cache to read data from main memory when a cache miss occurs.
+
+Run the code to observe that the empty cache causes all cache misses. The output indicates `NO DATA` because the cache does not retrieve anything from main memory yet.
+
 **Hint**
 
 **CP2**
+
+In **cache.py** add the cache miss behavior.
+
+Inside the `read()` method:
+- Add and `else` clause at the end of the `if` statement.
+- Define a `data` variable and assign it a call to the `read()` method of `self.main_memory` with `address` as the argument.
+
+The output now indicates a read from main memory and the duration is greater. 
 
 **Hint**
 
 **CP3**
 
+The `add_entry()` method has been added to the `Cache()` class. It is used to add an entry to cache given the memory address and data. 
+
+Inside the `else` clause:
+- Call `self.add_entry()` with `address` and `data` as arguments.
+
 **Hint**
 
 **CP4**
 
+The last step is to retrieve the data from cache and return it. 
+
+Inside the `else` clause:
+- Call `self.sim_read()` to simulate a cache access.
+- Output `data` with a `print()` statement.
+- `return` the `data` variable.
+
+Running the code will start with cache misses, but result in cache hits once the data is found in the cache.
+
 **Hint**
 
-## Exercise 5: Replacement Policy (Possibly Expand to 2 exercises)
+## Exercise 5: Replacement Policy
 
 ### Narrative
 - Cache is only effective when there is data we can use in it. This is helped with a replacement policy.

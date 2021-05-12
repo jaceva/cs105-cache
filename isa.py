@@ -75,6 +75,6 @@ class ISA():
       if byte is not None:
         self.output += byte
       else:
-        print("NO DATA")
+        print(" - NO DATA")
     else:
       print("Jump address not recognized.")

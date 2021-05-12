@@ -17,29 +17,25 @@ class Memory():
     if output:
       print(f" - {self.name} write: ", end="")
     sleep(self.access_time)
-    # print("Data not written in Memory() class")
-    # self.data[loc] = byte
 
 # defined memory types
 
 class MainMemory(Memory):
   def __init__(self):
-    size = 16
+    self.size = 16
+    # Mississippi
+    self.data = ['M', 'i', 's', 'p',]
 
     # This is Mississippi.
-    self.data = [
-      'T', 'h', 'i', 's', 
-      ' ', 'M', 'p', '.']
+    # self.data = [
+    #   'T', 'h', 'i', 's', 
+    #   ' ', 'M', 'p', '.']
 
-    # Mississippi
-    # self.data = ['M', 'i', 's', 'p',]
+    
     
     Memory.__init__(self, "Main Memory", 1)
 
-  def read(self, loc):
-    data = self.data[loc]
+  def read(self, address):
+    data = self.data[address]
     super().sim_read()
     return data
-
-# Cache class to be written by the learner
-
