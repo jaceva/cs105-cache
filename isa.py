@@ -5,7 +5,7 @@ class Register(Memory):
   def __init__(self):
     size = 2
     data = {"r0": 104, "r1": 0}
-    Memory.__init__(self, "register", data, 0.05)
+    Memory.__init__(self, "register", 0.05, data)
 
   def read(self, loc):
     data = self.data[loc]

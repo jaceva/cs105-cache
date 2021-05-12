@@ -45,7 +45,6 @@ The middle section of the memory hierarchy is cache and is equivalent to your st
 ### Checkpoints
 **CP1**
 
-
 - Explain the code to be used for the lesson.
 - Run the code, notice the memory can't be found.
 
@@ -68,9 +67,11 @@ To start with the simulation, run the code to see output that explains there is 
 - (NO?)Call the architecture `read_code()` method with `"code.txt"` as the argument.
 - Run code, explain output.
 
-To attach memory to the architecture call the `set_memory()` method from `cache_arch` and pass it a call to `MainMemory()`.
+Currently, there are 2 memory classes in this simulation, `Register()` and `Main_Memory()`. The `Register()` class has a size of 2, an access time of 0.05 seconds and is used within the `ISA()` class. The `Main Memory()` class has a size of 16, an access time of 1 second and is not currently not used. Let's add `Main_Memory()` to the architecture so when a memory read occurs it will go to the data in the architectures main memory.
 
-When you run the code you will see each memory access instruction output a description of what is happening. The program will finish by outputting a text string of all the data accessed from the memory along with the time the simulation took to run.
+To add a main memory to the architecture call the `set_memory()` method from `cache_arch` and pass it a call to `MainMemory()`.
+
+When you run the code you will see each memory access instruction output a description of what is happening. The program will finish by outputting a text string of all the data accessed from the memory along with the time the simulation took to run. 
 
 **Hint**
 
@@ -104,6 +105,10 @@ In the animation there is a processor, main memory with a cache in the middle. T
 - Cache full with all data, output Mississippi
 - Introduce Cache class (already implemented with `MainMemory` as next tier and `size` set)
 - Learner will add the memory block variable(s)
+
+The code editor now has the file **cache.py**. This is where you will implement the cache behaviors throughout this lesson.
+
+In **cache.py**, the class `Cache()` inherits from the `Memory()` class. The `__init__` method defines to 2 variables, `self.size` and `self.data`. The cache size is set to 4 and the data is a list of 4 dictionaries, each with `'tag'` and `'data'` keys. The `__init__` method finishes off with a call to the `Memory()__init__()` with the arguments: `"Cache"` for the name string, `0.1` for the access_time and `self.data` for the data.
 
 **Hint**
 
