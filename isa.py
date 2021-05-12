@@ -3,13 +3,17 @@ from time import time
 
 class Register(Memory):
   def __init__(self):
-    size = 2
-    data = {"r0": 104, "r1": 0}
-    Memory.__init__(self, "register", 0.05, data)
+    self.size = 2
+    self.data = {"r0": None, "r1": None}
+    Memory.__init__(self, "Register", 0.05)
 
   def read(self, loc):
-    data = self.data[loc]
-    return super().read(data, output=False)
+    super().sim_read(output=False)
+    return self.data[loc]
+
+  def write(self, data, address):
+    super().sim_write(output=False)
+    self.data[address] = data
 
 class ISA():
   def __init__(self):
@@ -56,13 +60,11 @@ class ISA():
     loc = self.registers.read(arg2)
     byte = self.memory.read(loc)
     self.registers.write(byte, arg1)
-    print()
 
   def store(self, arg1, arg2):
     byte = self.registers.read(arg1)
     loc = self.registers.read(arg2)
     self.memory.write(byte, loc)
-    print()
 
   def load_i(self, arg1, arg2):
     self.registers.write(int(arg2), arg1)
@@ -70,6 +72,9 @@ class ISA():
   def jump(self, arg1):
     if arg1 == "100":
       byte = self.registers.read('r0')
-      self.output += byte
+      if byte is not None:
+        self.output += byte
+      else:
+        print("NO DATA")
     else:
       print("Jump address not recognized.")

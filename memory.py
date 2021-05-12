@@ -3,25 +3,22 @@ from time import sleep
 # abstract memory class
 
 class Memory():
-  def __init__(self, name, access_time, data):
-    self.access_time = access_time
-    self.data = data
+  def __init__(self, name, access_time):
     self.name = name
+    self.access_time = access_time
 
-  def read(self, data, output=True):
+  def sim_read(self, output=True):
     if output:
-      print(f"->{self.name} read: {data}", end="")
-
-    sleep(self.access_time)
-    return data
-
-
-  def write(self, byte, loc):
-    if self.name != "register":
-      print(f"->{self.name} write", end="")
+      print(f" - {self.name} read: ", end="")
     sleep(self.access_time)
 
-    self.data[loc] = byte
+
+  def sim_write(self, output=True):
+    if output:
+      print(f" - {self.name} write: ", end="")
+    sleep(self.access_time)
+    # print("Data not written in Memory() class")
+    # self.data[loc] = byte
 
 # defined memory types
 
@@ -37,11 +34,12 @@ class MainMemory(Memory):
     # Mississippi
     # self.data = ['M', 'i', 's', 'p',]
     
-    Memory.__init__(self, "Main Memory", 1, self.data)
+    Memory.__init__(self, "Main Memory", 1)
 
   def read(self, loc):
     data = self.data[loc]
-    return super().read(data)
+    super().sim_read()
+    return data
 
 # Cache class to be written by the learner
 

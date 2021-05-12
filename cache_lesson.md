@@ -102,29 +102,58 @@ In the animation there is a processor, main memory with a cache in the middle. T
 
 ### Checkpoints
 **CP1**
-- Cache full with all data, output Mississippi
-- Introduce Cache class (already implemented with `MainMemory` as next tier and `size` set)
-- Learner will add the memory block variable(s)
 
 The code editor now has the file **cache.py**. This is where you will implement the cache behaviors throughout this lesson.
 
-In **cache.py**, the class `Cache()` inherits from the `Memory()` class. The `__init__` method defines to 2 variables, `self.size` and `self.data`. The cache size is set to 4 and the data is a list of 4 dictionaries, each with `'tag'` and `'data'` keys. The `__init__` method finishes off with a call to the `Memory()__init__()` with the arguments: `"Cache"` for the name string, `0.1` for the access_time and `self.data` for the data.
+In **cache.py**, the class `Cache()` inherits from the `Memory()` class. The `__init__` method defines 3 variables:
+- `self.size`: equal to 4, this defines the number of blocks in the Cache()
+- `self.data`: assigned a list of 4 dictionaries, each with `'tag'` and `'data'` keys. This data is hard coded for this exercise.
+- `self.sim_read`: assigned the `sim_read()` method of the super class `Memory()`. This pauses the program for the set access time and produces output.
+  
+The `__init__` method finishes off with a call to the `Memory()__init__()` with the arguments: 
+- `"Cache"` for the name string
+- `0.1` for the access_time 
+
+Data is retrieved when the architecture calls `read()` from its memory. In **app.py* start using cache as memory by replacing `Main_Memory()` with `Cache()` in the `set_memory()`
+
+When you run the code there should be a `NO DATA` error output with the instruction output. This is because the cache does not have a `read()` method yet.
 
 **Hint**
 
 **CP2**
-- Create a class function `read()`.
-- Inside the function call the parent class `read()` function using `super()` and place the return value in a variable called `byte`.
-- return byte 
+
+Back in **cache.py**, the data pre-populated in the `Cache()` class's `self.data` variable has all the characters needed for the executed instructions. This will result in only cache hits. The method `is_hit()`, takes a memory address and searches for it in `self.data`. If it finds the address, `CACHE HIT` is output and it returns the cache entry as a dictionary. If it doesn't find it, `CACHE MISS` is output and `None` is returned.
+
+In **cache.py**: 
+- Define the `read()` method with `self` and `address` as the parameters.
+- Inside the method, define an `entry` variable and assign it a call to `is_hit()` with `address` as the parameter.
+
+When you run the code, the output should now indicate a cache hit on each read along with the `NO DATA` error.
 
 **Hint**
 
 **CP3**
 
-- In **app.py** create an instance of `Cache()` and put it in the variable `cache_memory` 
-- Change memory of architecture to `cache_memory`
+Now you need to check if `is_hit()` is a cache hit.
 
-Run the code. Out put will be the same since `Cache()` is just a pass through for now.
+After the `entry` variable definition:
+- Write an `if` statement that checks if `entry` is not equal to `None`.
+- Inside the `if` statement, call `self.sim_read()` to simulate the access time for the cache.
+
+Running the code should output with `Cache read: ` and the duration should be a little longer with the simulated access time.
+
+**Hint**
+
+**CP4**
+
+The last step is to output and return the data retrieved from cache.
+
+Inside the `read()` method `if` statement:
+- Define `data` and assign it the value in `entry["data"]`.
+- Output `data` with a `print()` statement.
+- `return` the `data` variable.
+
+The output should now show each character retrieved from cache at the end of each line. The output string should be complete.
 
 **Hint**
 
