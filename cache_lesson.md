@@ -100,8 +100,6 @@ In the animation there is a processor, main memory with a cache in the middle. T
 ### Checkpoints
 **CP1**
 
-The code editor now has the file **cache.py**. This is where you will implement the cache behaviors throughout this lesson.
-
 In **cache.py**, the class `Cache()` inherits from the `Memory()` class. The `__init__` method defines 3 variables:
 - `self.size`: equal to 4, this defines the number of blocks in the Cache()
 - `self.data`: assigned a list of 4 dictionaries, each with `'tag'` and `'data'` keys. This data is hard coded for this exercise.

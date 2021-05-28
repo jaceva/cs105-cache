@@ -1,84 +1,95 @@
-from operator import is_
 from memory import Memory, MainMemory
 from random import randint
 
 class Cache(Memory):
   def __init__(self):
-    Memory.__init__(self, name="Cache", access_time=0.1)
+    super().__init__(name="Cache", access_time=0.1)
     self.size = 4
     # Mississippi
     # self.data = [
-    #   {'tag': 0, 'data': 'M'},
-    #   {'tag': 1, 'data': 'i'},
-    #   {'tag': 2, 'data': 's'},
-    #   {'tag': 3, 'data': 'p'},
+    #  " {"tag": 0, 'data': "M"},
+    #   {"tag": 1, 'data': "i"},
+    #   {"tag": 2, 'data': "s"},
+    #   {"tag": 3, 'data': "p"},
     # ]
 
-    self.data = []
-    for i in range(self.size):
-      self.data.append({'tag': None, 'data': ''})
-
-    self.sim_read = super().sim_read
+    self.data = [
+      {"tag": None, "data": ''},
+      {"tag": None, "data": ''},
+      {"tag": None, "data": ''},
+      {"tag": None, "data": ''},
+    ]
 
     self.main_memory = MainMemory()
 
-    self.index = -1
+    self.indices = [-1, 0, 1, 2]
+    self.sets = 1 # 1,2 or 4
+
+  def random_policy(self, set_number):
+    if self.sets == 1:
+      return randint(0, len(self.data)-1)
+    elif self.sets == 2:
+      return randint(set_number*2, set_number*2+1)
     
-    
-    self.policy = self.replace_fifo
-
-
-  def replace_random(self):
-    return randint(0, self.size-1)
+    return set_number
     
 
-  def replace_fifo(self):
-    self.index += 1
-    if self.index == self.size:
-      self.index = 0
+  def fifo_policy(self, set_number):
+    self.indices[set_number] += 1
+    if self.indices[set_number] == len(self.data)/self.sets + set_number:
+      self.indices[set_number] = set_number - 1
 
-    return self.index
+    return self.indices[set_number]
 
-  def replace(self, new_address, new_data):
-    index = self.policy()
-    entry = self.data[index]
-    print(f"\nOld entry {index} - tag: {entry['tag']}, data: \"{entry['data']}\"")
-    entry = {'tag': new_address, 'data': new_data}
-    self.data[index] = entry
-    print(f"New entry {index} - tag: {entry['tag']}, data: \"{entry['data']}\"")
+  def replace_entry(self, address, data):
+    index = 0
+    set_number = address % self.sets
+    index = self.fifo_policy(set_number)
+    
+    self.data[index] = {'tag': address, 'data': data}
 
   ## Given
-  def is_hit(self, address):
+  def get_entry(self, address):
     
     for entry in self.data:
       if entry['tag'] == address:
-        print(f" - CACHE HIT", end="")
-        return entry
+        ## This check added at write policy
+        if entry['data'] is not None:
+          print(f"HIT: ", end="")
+          return entry
 
-    print(f" - CACHE MISS", end="")
+    print(f"MISS", end="")
     return None
 
-  ## Given
+  ## Given - removed after replacement policy
   def add_entry(self, address, data):
     for entry in self.data:
       if entry['tag'] == None:
         entry['tag'] = address
         entry['data'] = data
         return
-    
-    # ex 5
-    # self.replace(address, data)
 
   def read(self, address):
-    entry = self.is_hit(address)
+    super().sim_read()
+    entry = self.get_entry(address)
     if entry is not None:
-      self.sim_read()
       data = entry['data']
-      print(data)
-      return data
     else:
       data = self.main_memory.read(address)
-      self.add_entry(address, data)
-      self.sim_read()
-      print(data)
-      return data
+      self.replace_entry(address, data)
+
+    return data
+
+  # just the write-through policy
+  def write(self, address, data):
+    super().sim_write()
+    entry = self.get_entry(address)
+    if entry is not None:
+      entry["data"] = data
+    else:
+      self.replace_entry(address, data)
+    
+    self.main_memory.write(address, data)
+
+  def get_exec_time(self):
+    return self.exec_time + self.main_memory.get_exec_time()

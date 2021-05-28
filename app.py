@@ -9,9 +9,10 @@ if __name__ == "__main__":
   cache_arch.set_memory(Cache())
 
   ### Run code
-  duration = cache_arch.read_instructions("code_misp.txt")
+  cache_arch.read_instructions("code_write.txt")
+  exec_time = cache_arch.get_exec_time()
 
   ### Output memory data and code execution duration
-  if duration is not None:
+  if exec_time > 0:
     print(f"OUTPUT STRING: {cache_arch.output}")
-    print(f"DURATION: {duration:.2f} seconds")
+    print(f"EXECUTION TIME: {exec_time:.2f} seconds")

@@ -6,13 +6,16 @@ class Register(Memory):
     Memory.__init__(self, name="Register", access_time=0.05)
     self.data = {"r0": None, "r1": None}
 
-  def read(self, loc):
+  def read(self, address):
     super().sim_read(output=False)
-    return self.data[loc]
+    return self.data[address]
 
-  def write(self, data, address):
+  def write(self, address, data):
     super().sim_write(output=False)
     self.data[address] = data
+  
+  def get_exec_time(self):
+    return self.exec_time
 
 class ISA():
   def __init__(self):
@@ -25,6 +28,9 @@ class ISA():
       "j": self.jump,
     }
     self.output = ""
+
+  def get_exec_time(self):
+    return self.registers.get_exec_time() + self.memory.get_exec_time()
 
   def set_memory(self, memory):
     self.memory = memory
@@ -49,31 +55,36 @@ class ISA():
     if inst == "lb" or inst == "sb":
       print(f"{line}", end="")
     arg1 = tokens[1]
-    if len(tokens) > 2:
+    if len(tokens) == 2 and inst == "li":
+      arg2 = " "
+      self.instructions[inst](arg1, arg2)
+    elif len(tokens) > 2:
       arg2 = tokens[2]
       self.instructions[inst](arg1, arg2)
     else:
       self.instructions[inst](arg1)
 
   def load_b(self, arg1, arg2):
-    loc = self.registers.read(arg2)
-    byte = self.memory.read(loc)
-    self.registers.write(byte, arg1)
+    address = int(self.registers.read(arg2))
+    data = self.memory.read(address)
+    self.registers.write(arg1, data)
+    print(data)
 
   def store(self, arg1, arg2):
-    byte = self.registers.read(arg1)
-    loc = self.registers.read(arg2)
-    self.memory.write(byte, loc)
+    data = self.registers.read(arg1)
+    address = int(self.registers.read(arg2))
+    self.memory.write(address, data)
+    print(data)
 
   def load_i(self, arg1, arg2):
-    self.registers.write(int(arg2), arg1)
+    self.registers.write(arg1, arg2)
 
   def jump(self, arg1):
     if arg1 == "100":
-      byte = self.registers.read('r0')
-      if byte is not None:
-        self.output += byte
+      data = self.registers.read('r0')
+      if data is not None:
+        self.output += data
       else:
-        print(" - NO DATA")
+        print("- NO DATA")
     else:
       print("Jump address not recognized.")
